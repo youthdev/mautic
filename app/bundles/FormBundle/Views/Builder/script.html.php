@@ -30,4 +30,19 @@ $scriptSrc = str_replace('/index_dev.php', '', $scriptSrc);
             'submittingMessage': "<?php echo $view['translator']->trans('mautic.form.submission.pleasewait'); ?>"
         }
     }
+    
+    if (typeof MauticFormCallback == 'undefined') {
+        var MauticFormCallback = {};
+    }
+    if (!MauticFormCallback[<?php echo json_encode($form->generateFormName()); ?>]) {
+        MauticFormCallback[<?php echo json_encode($form->generateFormName()); ?>] = {
+            onResponse: function (response) {
+                (function($) {
+                    if ($) {
+                        $('.mauticform-innerform').fadeOut();
+                    }
+                })(window.jQuery);
+            }
+        };
+    }
 </script>
